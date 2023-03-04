@@ -71,11 +71,11 @@ const fetchModalDetails = cardId => {
 }
 
 const displayModalDetails = data => {
-    console.log(data);
+    console.log(data.pricing[0]);
     const accuracy = `${data.accuracy.score}`;
     const accuracySlice = accuracy.slice(2, 4);
     const acc = '% Accuracy';
-    console.log(data.integrations);
+    // console.log(data.integrations);
 
     // const accuracyBtn = () => {
     //     const accuracyBtnEle = document.getElementById('accuracy-btn');
@@ -87,16 +87,16 @@ const displayModalDetails = data => {
             <p class="fw-bold">${data.description}</p>
             <div class="d-flex justify-content-around fw-bold p-2 ">
                 <div class="text-success mx-2" style="line-height: 10px;">
-                    <p>${data.pricing[0].price}</p>
+                    <p style="line-height: 14px;">${data.pricing[0].price !== 'No cost' ? data.pricing[0].price : 'Free of Cost'}</p>
                     <p>${data.pricing[0].plan}</p>
                 </div>
                 <div class="text-warning mx-2" style="line-height: 10px;">
-                    <p>${data.pricing[1].price}</p>
+                    <p style="line-height: 14px;">${data.pricing[1].price !== 'No cost' ? data.pricing[1].price : 'Free of Cost'}</p>
                     <p>${data.pricing[1].plan}</p>
                 </div>
                 <div class="text-danger mx-2">
-                    <p style="line-height: 14px;">${data.pricing[2].price}</p>
-                    <p style="line-height: 10px;">${data.pricing[2].plan}</p>
+                    <p style="line-height: 14px;">${data.pricing[2].price !== 'No cost' ? data.pricing[2].price : 'Free of Cost'}</p>
+                    <p style="line-height: 14px;">${data.pricing[2].plan}</p>
                 </div>
             </div>
             <div class="d-flex gap-1">
@@ -122,7 +122,7 @@ const displayModalDetails = data => {
             <img src="${data.image_link[0]}" class="card-img-top img-fluid rounded" alt="...">
             <button id="accuracy-btn" class="btn btn-danger fw-semibold mt-2">${data.accuracy.score == null ? 'No data Found' : accuracySlice+acc}</button>
             <p class="fw-bold fs-5 mt-4">${data.input_output_examples[0].input}</p>
-            <p>${data.input_output_examples[0].output}</p>
+            <p>${data.input_output_examples[0].output ? data.input_output_examples[0].output : 'No! Not Yet! Take a Break!!!'}</p>
         </div>
     `
 }
