@@ -11,7 +11,8 @@ const displayAllCards = data => {
     const cardContainer = document.getElementById('card-container');
 
     data.tools.slice(0, 6).forEach(singleCard => {
-        console.log(singleCard);
+        // console.log(singleCard);
+        loadingSpinner(true);
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('card', 'border-0');
         cardDiv.innerHTML = `
@@ -39,8 +40,20 @@ const displayAllCards = data => {
             </div>
         `
         cardContainer.appendChild(cardDiv);
+        loadingSpinner(false);
     });
 }
 
-
 fetchCard();
+
+
+// spinner section
+const loadingSpinner = isLoading => {
+    const spinnerDiv = document.getElementById('spinner');
+    if(isLoading){
+        spinnerDiv.classList.remove('d-none');
+    }
+    else{
+        spinnerDiv.classList.add('d-none');
+    }
+}
