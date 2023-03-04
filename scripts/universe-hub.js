@@ -70,12 +70,49 @@ const fetchModalDetails = cardId => {
 
 const displayModalDetails = data => {
     console.log(data);
+    const accuracy = `${data.accuracy.score}`;
+    const accuracySlice = accuracy.slice(2, 4);
+    // console.log(accuracySlice);
+
     document.getElementById('modal-body').innerHTML = `
-        <div>
+        <div class="w-md-50 border border-danger-subtle rounded p-2">
             <p class="fw-bold">${data.description}</p>
+            <div class="d-flex justify-content-around fw-bold p-2 ">
+                <div class="text-success mx-2" style="line-height: 10px;">
+                    <p>${data.pricing[0].price}</p>
+                    <p>${data.pricing[0].plan}</p>
+                </div>
+                <div class="text-warning mx-2" style="line-height: 10px;">
+                    <p>${data.pricing[1].price}</p>
+                    <p>${data.pricing[1].plan}</p>
+                </div>
+                <div class="text-danger mx-2">
+                    <p style="line-height: 14px;">${data.pricing[2].price}</p>
+                    <p style="line-height: 10px;">${data.pricing[2].plan}</p>
+                </div>
+            </div>
+            <div class="d-flex gap-1">
+                <div>
+                    <h5 class="card-title fw-bold">Features</h5>
+                    <ul>
+                        <li>${data.features['1'].feature_name}</li>
+                        <li>${data.features['2'].feature_name}</li>
+                        <li>${data.features['3'].feature_name}</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="card-title fw-bold">Integrations</h5>
+                    <ul>
+                        <li>${data.integrations[0]}</li>
+                        <li>${data.integrations[1]}</li>
+                        <li>${data.integrations[2]}</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="text-center">
+        <div id="accuracy-btn-container" class="text-center w-md-50">
             <img src="${data.image_link[0]}" class="card-img-top img-fluid rounded" alt="...">
+            <button id="accuracy-btn" class="btn btn-danger fw-semibold mt-2">${accuracySlice}% Accuracy</button>
             <p class="fw-bold fs-5 mt-4">${data.input_output_examples[0].input}</p>
             <p>${data.input_output_examples[0].output}</p>
         </div>
