@@ -71,16 +71,10 @@ const fetchModalDetails = cardId => {
 }
 
 const displayModalDetails = data => {
-    console.log(data.pricing[0]);
+    console.log(data);
     const accuracy = `${data.accuracy.score}`;
     const accuracySlice = accuracy.slice(2, 4);
     const acc = '% Accuracy';
-    // console.log(data.integrations);
-
-    // const accuracyBtn = () => {
-    //     const accuracyBtnEle = document.getElementById('accuracy-btn');
-    //     accuracyBtnEle.classList.add('d-none');
-    // }
 
     document.getElementById('modal-body').innerHTML = `
         <div class="w-md-50 border border-danger-subtle rounded p-2">
@@ -111,7 +105,7 @@ const displayModalDetails = data => {
                 <div>
                     <h5 class="card-title fw-bold">Integrations</h5>
                     <ul>
-                        <li>${data.integrations[0]}</li>
+                        <li>${data.integrations[0] ? data.integrations[0] : 'No data Found'}</li>
                         <li>${data.integrations[1] ? data.integrations[1] : 'No data Found'}</li>
                         <li>${data.integrations[2] ? data.integrations[2] : 'No data Found'}</li>
                     </ul>
@@ -120,7 +114,7 @@ const displayModalDetails = data => {
         </div>
         <div id="accuracy-btn-container" class="text-center w-md-50">
             <img src="${data.image_link[0]}" class="card-img-top img-fluid rounded" alt="...">
-            <button id="accuracy-btn" class="btn btn-danger fw-semibold mt-2">${data.accuracy.score == null ? 'No data Found' : accuracySlice+acc}</button>
+            <button id="accuracy-btn" class="btn btn-danger fw-semibold mt-2">${data.accuracy.score == null ? 'No data Found' : accuracySlice + acc}</button>
             <p class="fw-bold fs-5 mt-4">${data.input_output_examples[0].input}</p>
             <p>${data.input_output_examples[0].output ? data.input_output_examples[0].output : 'No! Not Yet! Take a Break!!!'}</p>
         </div>
@@ -129,14 +123,10 @@ const displayModalDetails = data => {
 
 
 // show all cards by clicking see more button
-const allCards = async () => {
-    // const allCardsurl = 'https://openapi.programming-hero.com/api/ai/tools';
-    // const res = await fetch(allCardsurl);
-    // const data = await res.json();
-    // displayAllCardsByBtn(data.data);
+const allCards = () => {
     fetch('https://openapi.programming-hero.com/api/ai/tools')
-    .then(res => res.json())
-    .then(data => displayAllCardsByBtn(data.data))
+        .then(res => res.json())
+        .then(data => displayAllCardsByBtn(data.data))
 }
 
 const displayAllCardsByBtn = data => {
@@ -146,7 +136,7 @@ const displayAllCardsByBtn = data => {
     const card = data.tools;
 
     card.forEach(singleCard => {
-        console.log(singleCard);
+        // console.log(singleCard);
         loadingSpinner(true);
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('card', 'border-0');
@@ -181,3 +171,6 @@ const displayAllCardsByBtn = data => {
     const seeAllBtn = document.getElementById('see-more-btn');
     seeAllBtn.classList.add('d-none');
 }
+
+
+
