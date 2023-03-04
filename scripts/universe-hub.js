@@ -11,7 +11,7 @@ const displayAllCards = data => {
     const cardContainer = document.getElementById('card-container');
 
     data.tools.slice(0, 6).forEach(singleCard => {
-        // console.log(singleCard);
+        console.log(singleCard);
         loadingSpinner(true);
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('card', 'border-0');
@@ -34,7 +34,7 @@ const displayAllCards = data => {
                         </div>
                     </div>
                     <div>
-                        <p><i class="fa-solid fa-arrow-right"></i></p>
+                        <p><i class="fa-solid fa-arrow-right" onclick="fetchModalDetails('${singleCard.id}')" data-bs-toggle="modal" data-bs-target="#exampleModal"></i></p>
                     </div>
                 </div>
             </div>
@@ -56,4 +56,28 @@ const loadingSpinner = isLoading => {
     else{
         spinnerDiv.classList.add('d-none');
     }
+}
+
+
+// code for modal 
+const fetchModalDetails = cardId => {
+    // console.log(cardId);
+    const url = `https://openapi.programming-hero.com/api/ai/tool/${cardId}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayModalDetails(data.data))    
+}
+
+const displayModalDetails = data => {
+    console.log(data);
+    document.getElementById('modal-body').innerHTML = `
+        <div>
+            <p class="fw-bold">${data.description}</p>
+        </div>
+        <div class="text-center">
+            <img src="${data.image_link[0]}" class="card-img-top img-fluid rounded" alt="...">
+            <p class="fw-bold fs-5 mt-4">${data.input_output_examples[0].input}</p>
+            <p>${data.input_output_examples[0].output}</p>
+        </div>
+    `
 }
