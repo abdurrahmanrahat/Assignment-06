@@ -5,7 +5,7 @@ const fetchCard = () => {
         .then(data => displayAllCards(data.data))
 }
 
-// display all cards on UI 
+// display first six cards on UI 
 const displayAllCards = data => {
     // console.log(data);
     const cardContainer = document.getElementById('card-container');
@@ -74,7 +74,13 @@ const displayModalDetails = data => {
     console.log(data);
     const accuracy = `${data.accuracy.score}`;
     const accuracySlice = accuracy.slice(2, 4);
-    // console.log(accuracySlice);
+    const acc = '% Accuracy';
+    console.log(data.integrations);
+
+    // const accuracyBtn = () => {
+    //     const accuracyBtnEle = document.getElementById('accuracy-btn');
+    //     accuracyBtnEle.classList.add('d-none');
+    // }
 
     document.getElementById('modal-body').innerHTML = `
         <div class="w-md-50 border border-danger-subtle rounded p-2">
@@ -106,15 +112,15 @@ const displayModalDetails = data => {
                     <h5 class="card-title fw-bold">Integrations</h5>
                     <ul>
                         <li>${data.integrations[0]}</li>
-                        <li>${data.integrations[1]}</li>
-                        <li>${data.integrations[2]}</li>
+                        <li>${data.integrations[1] ? data.integrations[1] : 'No data Found'}</li>
+                        <li>${data.integrations[2] ? data.integrations[2] : 'No data Found'}</li>
                     </ul>
                 </div>
             </div>
         </div>
         <div id="accuracy-btn-container" class="text-center w-md-50">
             <img src="${data.image_link[0]}" class="card-img-top img-fluid rounded" alt="...">
-            <button id="accuracy-btn" class="btn btn-danger fw-semibold mt-2">${accuracySlice}% Accuracy</button>
+            <button id="accuracy-btn" class="btn btn-danger fw-semibold mt-2">${data.accuracy.score == null ? 'No data Found' : accuracySlice+acc}</button>
             <p class="fw-bold fs-5 mt-4">${data.input_output_examples[0].input}</p>
             <p>${data.input_output_examples[0].output}</p>
         </div>
